@@ -22,14 +22,15 @@ class FileWorker:
         f.close()
 
     def writeFile(list):
+        list=sorted(list, key=lambda Player: Player.wins, reverse=True)
         open('records', 'w').close()
         w=open('records', 'w')
         for Player in list:
             name = Player.name
             print (name)
-            wins= Player.wins
+            wins= str(Player.wins)
             print (wins)
-            w.write(name+'|'+wins)
-            w.close()
-            print('Goodbye')
-            sys.exit()
+            w.write(name+'|'+wins+'\n')
+        w.close()
+        print('Goodbye')
+        sys.exit()

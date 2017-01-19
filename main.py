@@ -8,10 +8,12 @@ print ("Enter your name")
 newName = input()
 #Player.name+'|'+Player.wins.toString()
 
-for player in playerList:
-    if (player.name == newName) in playerList:
-        Game(Player, playerList)
-    else:
-        plr=Player(newName, 0)
-        playerList.append(plr)
-        Game(plr, playerList)
+while True:
+
+    for player in playerList:
+        print(player.name)
+        if (player.name == newName):
+            playerList.remove(player)
+            Game(player, playerList)
+    plr=Player(newName, 0)
+    Game(plr, playerList)
