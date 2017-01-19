@@ -1,19 +1,17 @@
-f=open('records','r')
+from FileWorker import FileWorker
+from Player import Player
+from Game import Game
 
-list=[]
-for line in f:
-    line=line.strip(' '+'\n')
-    list.append(line.split('|'))
+playerList=FileWorker.readFile()
+print ("Enter your name")
+#get input from user
+newName = input()
+#Player.name+'|'+Player.wins.toString()
 
-list.append(['Claire','4'])
-print(list)
-f.close()
-open('records', 'w').close()
-w=open('records', 'w')
-for elem in list:
-    name = elem[0]
-    print (name)
-    wins=elem[1]
-    print (wins)
-    w.write(name+'|'+wins+'\n')
-w.close()
+for player in playerList:
+    if (player.name == newName) in playerList:
+        Game(Player, playerList)
+    else:
+        plr=Player(newName, 0)
+        playerList.append(plr)
+        Game(plr, playerList)
