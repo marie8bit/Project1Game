@@ -4,12 +4,10 @@ from FileWorker import FileWorker
 from Player import Player
 from Game import Game
 #handles error if file is not found
-try:
-    playerList=FileWorker.readFile()
-except UnboundLocalError as ule:
-    print('File not found')
-except IOError as err:
-    print ('File not found')
+
+playerList = FileWorker.readFile()
+
+
 #get user name to change win value or create a new player
 print ("Enter your name")
 #get input from user
@@ -27,15 +25,24 @@ try:
         #initializes game with existing user
         if (player.name == newName):
             playerList.remove(player)
-            Game(player, playerList)
-    #create new user
-    plr=Player(newName, 0)
-    #initialize game for new user
-    Game(plr, playerList)
+            game = Game(player, playerList)
+            game.go()
+        else:
+            #create new user
+            plr=Player(newName, 0)
+            #initialize game for new user
+            game= Game(plr, playerList)
+            game.go()
 #creates playerList if not created with FileWorker function
-except NameError as ne:
+except:
     playerList =[]
     #starts game with new user
     plyr= Player(newName, 0)
     game = Game(plyr, playerList)
     game.go()
+# except NameError as ne:
+#     playerList =[]
+#     #starts game with new user
+#     plyr= Player(newName, 0)
+#     game = Game(plyr, playerList)
+#     game.go()

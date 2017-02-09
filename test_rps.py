@@ -8,21 +8,26 @@ class TestRockPaperScissors(unittest.TestCase):
     # Enter y to play; enter 1 to throw rock; computer thows scissors
     @patch('Game.Game.compThrow', side_effect=[3])
     @patch('builtins.input', side_effect=['y', '1', 'n'])
-    def test_game(self, mock_input, mock_comp_throw):
+    def test_game_win(self, mock_input, mock_comp_throw):
 
         examplePlayer1 = Player("marie", 10)
-        examplePlayer2 = Player("nothing", 3)
-
-        playerList = [ examplePlayer1 ]
-
-        game = Game(examplePlayer2, playerList)
+        playerList = []
+        game = Game(examplePlayer1, playerList)
         game.go()
+        self.assertCountEqual(game.playerList,  [ examplePlayer1])
+        self.assertEqual(11, examplePlayer1.wins)
+    @patch('Game.Game.compThrow', side_effect=[1])
+    @patch('builtins.input', side_effect=['y', '3', 'n'])
+    def test_game_lose(self, mock_input, mock_comp_throw):
 
-        self.assertCountEqual(game.playerList,  [ examplePlayer1, examplePlayer2 ])
-        self.assertEqual(4, examplePlayer2.wins)
+        examplePlayer1 = Player("marie", 10)
+        playerList = []
+        game = Game(examplePlayer1, playerList)
+        game.go()
+        self.assertCountEqual(game.playerList,  [ examplePlayer1])
+        self.assertEqual(10, examplePlayer1.wins)
 
-
-    def test_winning(self):
+    def test_game_tie_win(self):
 
         examplePlayer1 = Player("marie", 10)
         computerThrow = 1
