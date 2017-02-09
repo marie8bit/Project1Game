@@ -37,4 +37,5 @@ except NameError as ne:
     playerList =[]
     #starts game with new user
     plyr= Player(newName, 0)
-    Game(plyr, playerList)
+    game = Game(plyr, playerList)
+    game.go()

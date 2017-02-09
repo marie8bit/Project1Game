@@ -49,4 +49,4 @@ class FileWorker:
         #let user know program is closed
         print('Goodbye')
         #end program
-        sys.exit()
+        ##sys.exit()
