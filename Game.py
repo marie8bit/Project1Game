@@ -31,9 +31,9 @@ class Game:
         throw = input()
         return throw
 
+    #validate user input
     def validate_input_int(self, throw):
 
-        #validate user input
         try:
             pthrow = int(throw)
         except ValueError:
@@ -41,11 +41,12 @@ class Game:
             throw = input()
             pthrow = self.validate_input_int(throw)
         return pthrow
-
+    #verifies input is an number in the list
     def validate_input_list(self, pthrow):
         if (pthrow==1 or pthrow ==2 or pthrow == 3):
             return pthrow
         else:
+            #revalidates that the user entered an integer
             print('Your entry must be a number in the list')
             plathrow = self.validate_input_int(input())
             plthrow = self.validate_input_list(plathrow)
@@ -86,7 +87,6 @@ class Game:
                 else:
                     string = 'Computer wins'
 
-
             elif (2 in [player_throw, puter] and 3 in [player_throw, puter]):
 
                 if (player_throw == 3):
@@ -94,8 +94,6 @@ class Game:
 
                 else:
                     string= 'Computer wins'
-
-
 
             elif (1 in [player_throw, puter] and 3 in [player_throw, puter]):
 
