@@ -6,12 +6,21 @@ class Game:
 
     def __init__(self, player, playerList):
         self.playerList = playerList
-        self.player = player
+        self.player = Player(player.name, player.wins)
+
 
     def go(self):
         #comp = Player('Computer', 0)
-        self.playAgain( )
-
+        throw = self.tryAgain( )
+        int_throw = self.validate_input_int(throw)
+        pl_throw = self.validate_input_list(int_throw)
+        compT = self.compThrow()
+        there_was_a_winner, string = self.winning(pl_throw, compT)
+        print (string)
+        if there_was_a_winner:
+            self.playAgain()
+        else:
+            self.go()
 
     #provide game options to user
     def tryAgain(self) :
@@ -19,26 +28,29 @@ class Game:
         print('1:Rock')
         print('2:Paper')
         print('3:Scissors')
+        throw = input()
+        return throw
+
+    def validate_input_int(self, throw):
+
         #validate user input
         try:
-            throw = int(input())
+            pthrow = int(throw)
         except ValueError:
-            print('Your entry must be a number from the list')
-            self.tryAgain()
-        compT = self.compThrow()
-        #process user input
-        if (throw == ''):
-            print('Please select a number from the list')
-        #handles valid input
-        elif (throw in [1,2,3]):
-            there_was_a_winner = self.winning(throw, compT)
-            if there_was_a_winner:
-                self.playAgain()
-            else:
-                self.tryAgain()
-        #handles int input not in selection options
+            print('Your entry must be a number')
+            throw = input()
+            pthrow = self.validate_input_int(throw)
+        return pthrow
+
+    def validate_input_list(self, pthrow):
+        if (pthrow==1 or pthrow ==2 or pthrow == 3):
+            return pthrow
         else:
-            print('Please select a number from the list')
+            print('Your entry must be a number in the list')
+            plathrow = self.validate_input_int(input())
+            plthrow = self.validate_input_list(plathrow)
+            return plthrow
+
 
     #allows user to end the program
     def playAgain(self):
@@ -46,10 +58,11 @@ class Game:
         again = input().lower()
 
         if (again == 'y'):
-            self.tryAgain()
+            self.go()
         else:
             self.playerList.append(self.player)
             FileWorker.writeFile(self.playerList)
+
 
     #gets comp play
     def compThrow(self):
@@ -68,32 +81,36 @@ class Game:
 
                 if (player_throw == 2):
                     #call player class function for adjusting a players wins attribute
-                    self.player.win()
+                    string = self.player.win()
+
                 else:
-                    print ('Computer wins')
+                    string = 'Computer wins'
 
 
             elif (2 in [player_throw, puter] and 3 in [player_throw, puter]):
 
                 if (player_throw == 3):
-                    self.player.win()
+                    string = self.player.win()
+
                 else:
-                    print ('Computer wins')
+                    string= 'Computer wins'
+
 
 
             elif (1 in [player_throw, puter] and 3 in [player_throw, puter]):
 
                 if (player_throw == 1):
-                    self.player.win()
+                    string =self.player.win()
+
                 else:
-                    print ('Computer wins')
+                    string =  'Computer wins'
             #asks user if they want to play again
 
             #self.playAgain()
-            return True # indicate someone won
+            return True, string # indicate someone won
 
         #makes a player play again to settle a tie
         else:
-            print ('Tie, try again')
+            string = 'Tie, try again'
             #self.tryAgain()
-            return False   #  no winner
+            return False, string   #  no winner

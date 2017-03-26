@@ -7,7 +7,7 @@ class Player:
     #function to adjust Player wins attribute
     def win(self):
         self.wins+=1
-        print (self)
+        return str(self)
     #function to define how a Player instance is displayed to user
     def __str__(self):
         message = self.name + ' has won '+str(self.wins)+(' game!' if (self.wins == 1) else ' games!')
